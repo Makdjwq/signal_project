@@ -52,6 +52,18 @@ public class Patient {
      *         range
      */
     public List<PatientRecord> getRecords(long startTime, long endTime) {
-        // TODO Implement and test this method
+        List<PatientRecord> output = new ArrayList<>();
+        for (PatientRecord patient : patientRecords){
+            if (patient != null) {
+                //System.out.println(patient.getTimestamp());
+                if(patient.getTimestamp() >= startTime && patient.getTimestamp() <= endTime) {
+                    output.add(patient);
+                }
+            }
+        }
+        return output;
+    }
+    public int getPatientId(){
+        return patientId;
     }
 }
