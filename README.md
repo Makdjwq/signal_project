@@ -69,3 +69,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
   
 ## UML Diagrams
 [UML diagrams](./uml_models)
+
+## Test Screenshots
+[Screenshots](./testScreenshots)
