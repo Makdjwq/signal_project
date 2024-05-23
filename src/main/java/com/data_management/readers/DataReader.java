@@ -1,4 +1,6 @@
-package com.data_management;
+package com.data_management.readers;
+
+import com.data_management.DataStorage;
 
 import java.io.IOException;
 
@@ -10,4 +12,8 @@ public interface DataReader {
      * @throws IOException if there is an error reading the data
      */
     void readData(DataStorage dataStorage) throws IOException;
+
+    void connect(String serverUri);
+
+    void disconnect();
 }

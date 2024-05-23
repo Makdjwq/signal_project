@@ -1,15 +1,16 @@
-package com.data_management;
+package com.data_management.readers;
+
+import com.data_management.DataStorage;
+import com.data_management.PatientRecord;
+import com.data_management.readers.DataReader;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.List;
 
-public class Reader implements DataReader{
+public class Reader implements DataReader {
     private String path;
     public Reader(String path){
         this.path = path;
@@ -45,6 +46,16 @@ public class Reader implements DataReader{
                 }
             });
         }
+    }
+
+    @Override
+    public void connect(String serverUri) {
+
+    }
+
+    @Override
+    public void disconnect() {
+
     }
 
     /**

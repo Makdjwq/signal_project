@@ -3,6 +3,7 @@ package com.cardio_generator.outputs;
 import org.java_websocket.WebSocket;
 import org.java_websocket.server.WebSocketServer;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class WebSocketOutputStrategy implements OutputStrategy {
@@ -21,6 +22,14 @@ public class WebSocketOutputStrategy implements OutputStrategy {
         // Broadcast the message to all connected clients
         for (WebSocket conn : server.getConnections()) {
             conn.send(message);
+        }
+    }
+
+    public void stop() {
+        try {
+            server.stop();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

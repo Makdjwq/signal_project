@@ -2,10 +2,10 @@ package data_management;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.alerts.Alert;
+import com.alerts.alertTypes.Alert;
 import com.alerts.AlertGenerator;
 import com.data_management.Patient;
-import com.data_management.Reader;
+import com.data_management.readers.Reader;
 import org.junit.jupiter.api.Test;
 
 import com.data_management.DataStorage;
