@@ -72,3 +72,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Test Screenshots
 [Screenshots](./testScreenshots)
+
+##Disclamer
+Between week 4 and 7 something called ".DS_Store" blocked all my pushes and pulls (I was unaware of that at the moment), that is why there is 2 weeks difference between some commits
