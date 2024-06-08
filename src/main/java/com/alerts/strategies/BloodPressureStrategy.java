@@ -1,14 +1,18 @@
 package com.alerts.strategies;
 
 import com.alerts.alertTypes.Alert;
+import com.alerts.factories.AlertFactory;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
+/**
+ * Method used to check if a blood pressure alert should be triggered
+ */
 public class BloodPressureStrategy implements AlertStrategy {
     @Override
-    public boolean checkAlert(Patient patient) {
+    public Alert checkAlert(Patient patient, AlertFactory alertFactory) {
         List<PatientRecord> records = patient.getRecords(0, Long.MAX_VALUE); // get all data
         for (int i = 0; i < records.size(); i++) {
             PatientRecord record = records.get(i);
@@ -16,18 +20,23 @@ public class BloodPressureStrategy implements AlertStrategy {
                 //System.out.println(record.getRecordType());
                 if (shouldTriggerBloodPressureAlert(record, records)) {
                     // Expect the next record to be an alert
-                    if (i + 1 < records.size()) {
-                        System.out.println("Proper alert found for Blood Pressure condition."); // I do this to check if the alert was already manually initialized by a nurse
-                    } else {
-                        System.out.println("Expected alert missing or incorrect after Blood Pressure condition.");
-
-                    }
-                    return true;
+                    return alertFactory.createAlert(
+                            String.valueOf(record.getPatientId()),
+                            "Blood Pressure Alert",
+                            record.getTimestamp()
+                    );
                 }
             }
         }
-        return false;
+        return null;
     }
+
+    /**
+     * Method to check if a blood pressure alert should be triggered based on given records
+     * @param record current record
+     * @param records - all records
+     * @return true if yes, false if no
+     */
     private boolean shouldTriggerBloodPressureAlert(PatientRecord record, List<PatientRecord> records) {
 
         PatientRecord first = null;
@@ -43,14 +52,14 @@ public class BloodPressureStrategy implements AlertStrategy {
                     // Check for increasing trend
                     if ((second.getMeasurementValue() > first.getMeasurementValue() + 10) &&
                             (third.getMeasurementValue() > second.getMeasurementValue() + 10)) {
-                        System.out.println("Increasing Trend Alert Triggered for Patient ID: " + current.getPatientId());
+                        //System.out.println("Increasing Trend Alert Triggered for Patient ID: " + current.getPatientId());
                         return true;
                     }
 
                     // Check for decreasing trend
                     if ((second.getMeasurementValue() < first.getMeasurementValue() - 10) &&
                             (third.getMeasurementValue() < second.getMeasurementValue() - 10)) {
-                        System.out.println("Decreasing Trend Alert Triggered for Patient ID: " + current.getPatientId());
+                        //System.out.println("Decreasing Trend Alert Triggered for Patient ID: " + current.getPatientId());
                         return true;
                     }
                 }

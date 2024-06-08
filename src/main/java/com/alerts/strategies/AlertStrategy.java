@@ -1,9 +1,13 @@
 package com.alerts.strategies;
 
+import com.alerts.alertTypes.Alert;
+import com.alerts.factories.AlertFactory;
 import com.data_management.Patient;
 
-// Strategy interface
+/**
+ * Interface for alert strategies
+ */
 public interface AlertStrategy {
-    boolean checkAlert(Patient patient);
+    Alert checkAlert(Patient patient, AlertFactory alertFactory);
 }
 

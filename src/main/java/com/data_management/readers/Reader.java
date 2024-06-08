@@ -48,15 +48,6 @@ public class Reader implements DataReader {
         }
     }
 
-    @Override
-    public void connect(String serverUri) {
-
-    }
-
-    @Override
-    public void disconnect() {
-
-    }
 
     /**
      * This method is used to parse a line (String) to data we can add to the storage

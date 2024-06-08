@@ -1,4 +1,6 @@
 package data_management;
+import com.alerts.alertTypes.Alert;
+import com.alerts.factories.AlertFactory;
 import com.alerts.strategies.BloodPressureStrategy;
 import com.alerts.strategies.HeartRateStrategy;
 import com.alerts.strategies.OxygenSaturationStrategy;
@@ -6,6 +8,7 @@ import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +20,9 @@ public class AlertStrategyTest {
         patient.addRecord(80, "DiastolicPressure", System.currentTimeMillis());
 
         BloodPressureStrategy strategy = new BloodPressureStrategy();
-        assertFalse(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNull(alert);
+
     }
 
     @Test
@@ -26,7 +31,10 @@ public class AlertStrategyTest {
         patient.addRecord(185, "SystolicPressure", System.currentTimeMillis());
 
         BloodPressureStrategy strategy = new BloodPressureStrategy();
-        assertTrue(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNotNull(alert);
+        assertEquals("1", alert.getPatientId());
+        assertEquals("Blood Pressure Alert", alert.getCondition());
     }
 
     @Test
@@ -35,7 +43,10 @@ public class AlertStrategyTest {
         patient.addRecord(55, "DiastolicPressure", System.currentTimeMillis());
 
         BloodPressureStrategy strategy = new BloodPressureStrategy();
-        assertTrue(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNotNull(alert);
+        assertEquals("1", alert.getPatientId());
+        assertEquals("Blood Pressure Alert", alert.getCondition());
     }
 
     @Test
@@ -46,7 +57,8 @@ public class AlertStrategyTest {
         patient.addRecord(130, "SystolicPressure", System.currentTimeMillis() - 10000);
 
         BloodPressureStrategy strategy = new BloodPressureStrategy();
-        assertFalse(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNull(alert);
     }
 
     @Test
@@ -55,7 +67,9 @@ public class AlertStrategyTest {
         patient.addRecord(95, "Saturation", System.currentTimeMillis());
 
         OxygenSaturationStrategy strategy = new OxygenSaturationStrategy();
-        assertFalse(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNull(alert);
+
     }
 
     @Test
@@ -64,7 +78,10 @@ public class AlertStrategyTest {
         patient.addRecord(90, "Saturation", System.currentTimeMillis());
 
         OxygenSaturationStrategy strategy = new OxygenSaturationStrategy();
-        assertTrue(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNotNull(alert);
+        assertEquals("1", alert.getPatientId());
+        assertEquals("Oxygen Saturation Alert", alert.getCondition());
     }
 
     @Test
@@ -76,7 +93,10 @@ public class AlertStrategyTest {
         patient.addRecord(85, "Saturation", currentTime);
 
         OxygenSaturationStrategy strategy = new OxygenSaturationStrategy();
-        assertTrue(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNotNull(alert);
+        assertEquals("1", alert.getPatientId());
+        assertEquals("Oxygen Saturation Alert", alert.getCondition());
     }
 
     @Test
@@ -85,7 +105,9 @@ public class AlertStrategyTest {
         patient.addRecord(1.0, "ECG", System.currentTimeMillis());
 
         HeartRateStrategy strategy = new HeartRateStrategy();
-        assertFalse(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNull(alert);
+
     }
 
     @Test
@@ -97,7 +119,9 @@ public class AlertStrategyTest {
         patient.addRecord(1.0, "ECG", currentTime);
 
         HeartRateStrategy strategy = new HeartRateStrategy();
-        assertFalse(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNull(alert);
+
     }
 
     @Test
@@ -106,6 +130,8 @@ public class AlertStrategyTest {
         patient.addRecord(1.0, "ECG", System.currentTimeMillis());
 
         HeartRateStrategy strategy = new HeartRateStrategy();
-        assertFalse(strategy.checkAlert(patient));
+        Alert alert = strategy.checkAlert(patient, new AlertFactory());
+        assertNull(alert);
+
     }
 }

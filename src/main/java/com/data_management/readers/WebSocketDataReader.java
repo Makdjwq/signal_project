@@ -9,8 +9,9 @@ import java.net.URISyntaxException;
 
 /**
  * This class is not currently used, however could be useful
+ * Normally used as a websocket data reader, could connect disconnect ect.
  */
-public class WebSocketDataReader implements DataReader {
+public class WebSocketDataReader implements WebSocketReader {
     private MyWebSocketClient client;
     private DataStorage dataStorage;
 

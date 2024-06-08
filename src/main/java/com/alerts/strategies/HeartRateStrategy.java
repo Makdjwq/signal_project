@@ -1,15 +1,19 @@
 package com.alerts.strategies;
 
 import com.alerts.alertTypes.Alert;
+import com.alerts.factories.AlertFactory;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
+/**
+ * Strategy for heart rate, used to trigger alerts
+ */
 public class HeartRateStrategy implements AlertStrategy {
 
     @Override
-    public boolean checkAlert(Patient patient) {
+    public Alert checkAlert(Patient patient, AlertFactory alertFactory) {
         List<PatientRecord> records = patient.getRecords(0, Long.MAX_VALUE); // get all data
         for (int i = 0; i < records.size(); i++) {
             PatientRecord record = records.get(i);
@@ -24,13 +28,24 @@ public class HeartRateStrategy implements AlertStrategy {
                         } else {
                             System.out.println("Expected alert missing or incorrect after ECG condition.");
                         }
-                        return true;
+                        return alertFactory.createAlert(
+                                String.valueOf(record.getPatientId()),
+                                "Heart Rate Alert",
+                                record.getTimestamp()
+                        );
                     }
                 }
             }
         }
-        return false;
+        return null;
     }
+
+    /**
+     * Method used to check irregular beat patterns
+     * @param previousRecord previous record
+     * @param currentRecord current record
+     * @return true if should trigger alert, false if no
+     */
     private boolean checkIrregularBeatPattern(PatientRecord previousRecord, PatientRecord currentRecord) {
         long timeIntervalPrevious = previousRecord.getTimestamp();
         long timeIntervalCurrent = currentRecord.getTimestamp();
@@ -44,6 +59,12 @@ public class HeartRateStrategy implements AlertStrategy {
         }
         return false;
     }
+
+    /**
+     * Method used to check if there is an abnormal heart rate
+     * @param record - current record
+     * @return true if should trigger alert, false if no
+     */
     private boolean checkAbnormalHeartRate(PatientRecord record) {
         double heartRate = 60 *  record.getMeasurementValue();//convert somehow the function to heart rate
 

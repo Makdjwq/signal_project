@@ -1,6 +1,8 @@
 package com.alerts.alertTypes;
 
-// Represents an alert
+/**
+ * Basic class representing an alert, with all its necessary insights
+ */
 public class Alert {
     private String patientId;
     private String condition;
